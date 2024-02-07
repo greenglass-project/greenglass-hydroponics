@@ -1,0 +1,6 @@
+site_name: Greenglass Hydroponics
+nav:
+  - home : index.md
+
+theme: 
+  name : readthedocs
