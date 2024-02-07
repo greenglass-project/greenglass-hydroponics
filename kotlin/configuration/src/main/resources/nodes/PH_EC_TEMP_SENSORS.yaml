@@ -1,0 +1,121 @@
+type : "PH_EC_TEMP_SENSORS"
+name : "pH, EC and temperature sensors controller"
+description : "Controller for EC, pH, temperature and water level sensors"
+image: ""
+
+drivers:
+  - name : "ec-sensor"
+    type: "ezo_ec"
+
+    config:
+      type : "i2c"
+      device: 1
+      address: 100
+
+  - name: "ph-sensor"
+    type: "ezo_ph"
+
+    config:
+      type : "i2c"
+      device: 1
+      address: 99
+
+  - name: "temp-sensor"
+    type: "ezo_rtd"
+
+    config:
+      type : "i2c"
+      device: 1
+      address: 102
+
+metrics:
+  - metricName: "/sensors/ec/value"
+    type: "double"
+    direction : "read"
+    description: "Current ec value"
+    driver: "ec-sensor"
+    function: "value"
+
+  - metricName: "/sensors/ec/calibration/dry"
+    type: "double"
+    direction: "write"
+    description: "Calibration dry value"
+    driver: "ec-sensor"
+    function: "dry"
+
+  - metricName: "/sensors/ec/calibration/low"
+    type: "double"
+    direction: "write"
+    description: "Calibration low ec value"
+    driver: "ec-sensor"
+    function: "low"
+
+  - metricName: "/sensors/ec/calibration/high"
+    type: "double"
+    direction: "write"
+    description: "Calibration high ec value"
+    driver: "ec-sensor"
+    function: "high"
+
+  - metricName: "/sensors/ec/calibration/clear"
+    type: "boolean"
+    direction: "write"
+    description: "Clear calibration"
+    driver: "ec-sensor"
+    function: "clear"
+
+  - metricName:  "/sensors/ph/value"
+    type: "double"
+    direction: "read"
+    description: "Current ph value"
+    driver: "ph-sensor"
+    function: "value"
+
+  - metricName: "/sensors/ph/calibration/low"
+    type: "double"
+    direction: "write"
+    description: "Calibration low pH value"
+    driver: "ph-sensor"
+    function: "low"
+
+  - metricName: "/sensors/ph/calibration/mid"
+    type: "double"
+    direction: "write"
+    description: "Calibration mid pH value"
+    driver: "ph-sensor"
+    function: "mid"
+
+  - metricName: "/sensors/ph/calibration/high"
+    type: "double"
+    direction: "write"
+    description: "Calibration high pH value"
+    driver: "ph-sensor"
+    function: "high"
+
+  - metricName: "/sensors/ph/calibration/clear"
+    type: "boolean"
+    direction: "write"
+    description: "Clear calibration"
+    driver: "ph-sensor"
+    function: "clear"
+
+  - metricName: "/sensors/rtd/value"
+    type: "double"
+    direction: "read"
+    description: "Current temperature"
+    driver: "temp-sensor"
+    function: "value"
+
+  - metricName: "/sensors/rtd/calibration/temp"
+    type: "double"
+    direction: "write"
+    description: "Calibration temperature"
+    driver: "temp-sensor"
+    function: "temp"
+
+  - metricName: "/sensors/rtd/calibration/clear"
+    type: "boolean"
+    direction: "write"
+    description: "Clear calibration"
+    driver: "temp-sensor"
+    function: "clear"

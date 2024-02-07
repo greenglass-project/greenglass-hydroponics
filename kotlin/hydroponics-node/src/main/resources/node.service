@@ -1,0 +1,10 @@
+ [Unit]
+ Description=Greenglass Node
+ After=multi-user.target
+
+ [Service]
+ Type=idle
+ ExecStart=java -jar /home/node/node-0.0.1-runtime.jar > /home/node/node.log 2>&1 &
+
+ [Install]
+ WantedBy=multi-user.target

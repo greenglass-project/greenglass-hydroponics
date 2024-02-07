@@ -1,0 +1,132 @@
+systemId : "GROW_PIPES"
+name : "Grow Pipes"
+description : "Automated vertical grow pipes nft system"
+
+sequences :
+  - sequenceId : "REFRESH_WATER"
+    name : "Refresh water"
+    description : "Refresh water"
+
+processSchedulers :
+  - schedulerId: "GROW_LIGHTS_SCHEDULER"
+    name: "Grow lights scheduler"
+    description: "Turn the grow-lights on and off"
+    processes :
+      - process : "stateControlledProcess"
+        processId : "LIGHTING"
+        name : "Lighting"
+        description : "Turn on the grow-lights on and off"
+
+        manipulatedVariables :
+          - variableId: "LIGHTS"
+            name : "lights"
+            description : "Turn on the grow-lights on and off"
+            type : "Boolean"
+
+  - schedulerId: "water-management-scheduler"
+    name: "Water management scheduler"
+    description: "Management of pH and nutrients levels, water circulation and level"
+    processes :
+      - process : "stateControlledProcess"
+        processId : "CIRCULATION_PUMP"
+        name : "Circulation Pump"
+        description : "Turn on the circulation pump on and off"
+
+        manipulatedVariables :
+          - variableId: "CIRCULATION"
+            name : "circulation"
+            description : "Turn the circulation pump on and off"
+            type : "Boolean"
+
+      - process : "fuzzyLogicProcess"
+        processId : "STATE_MANAGEMENT"
+        name : "State management"
+        description : "Management of nutrients, pH and water level"
+
+        processVariables :
+          - variableId : "PH"
+            name : "ph"
+            description : "Control of the pH of the water"
+            type : "Double"
+            default : 5.0
+            minValue : 2.0
+            maxValue : 7.0
+            tolerance: 0.5
+            decimalPlaces: 1
+            units : ""
+
+          - variableId: "EC"
+            name : "ec"
+            description : "Control of the amount of nutrient in the water"
+            type : "Double"
+            default : 1500.0
+            minValue: 600.0
+            maxValue: 2500.0
+            tolerance : 200.0
+            decimalPlaces: 0
+            units: ""
+
+        manipulatedVariables :
+          - variableId: "PH_UP"
+            name : "ph-up"
+            description : "Dosing pump to add alkali to increase the pH "
+            type : "Int64"
+          - variableId: "PH_DOWN"
+            name : "ph-down"
+            description : "Dosing pump to add acid to decrease the pH"
+            type : "Int64"
+          - variableId: "EC_UP"
+            name : "ec-up"
+            description : "Dosing pump to add nutrient"
+            type : "Int64"
+          - variableId: "WATER_IN"
+            name : "water-in"
+            description: "Pump/valve to add fresh water to the tank"
+            type : "Boolean"
+          - variableId: "WATER_OUT"
+            name : "water-out"
+            description: "Pump/valve to remove water from the tank"
+            type : "Boolean"
+
+        fcl : >
+          FUNCTION_BLOCK tipper	// Block definition (there may be more than one block per file)
+
+          VAR_INPUT				// Define input variables
+          	service : REAL;
+          	food : REAL;
+          END_VAR
+
+          VAR_OUTPUT				// Define output variable
+          	tip : REAL;
+          END_VAR
+
+          FUZZIFY service			// Fuzzify input variable 'service': {'poor', 'good' , 'excellent'}
+          	TERM poor := (0, 1) (4, 0) ; 
+          	TERM good := (1, 0) (4,1) (6,1) (9,0);
+          	TERM excellent := (6, 0) (9, 1);
+          END_FUZZIFY
+
+          FUZZIFY food			// Fuzzify input variable 'food': { 'rancid', 'delicious' }
+          	TERM rancid := (0, 1) (1, 1) (3,0) ;
+          	TERM delicious := (7,0) (9,1);
+          END_FUZZIFY
+
+          DEFUZZIFY tip			// Defzzzify output variable 'tip' : {'cheap', 'average', 'generous' }
+          	TERM cheap := (0,0) (5,1) (10,0);
+          	TERM average := (10,0) (15,1) (20,0);
+          	TERM generous := (20,0) (25,1) (30,0);
+          	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method
+          	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)
+          END_DEFUZZIFY
+
+          RULEBLOCK No1
+          	AND : MIN;			// Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)
+          	ACT : MIN;			// Use 'min' activation method
+          	ACCU : MAX;			// Use 'max' accumulation method
+
+          	RULE 1 : IF service IS poor OR food IS rancid THEN tip IS cheap;
+          	RULE 2 : IF service IS good THEN tip IS average; 
+          	RULE 3 : IF service IS excellent AND food IS delicious THEN tip IS generous;
+          END_RULEBLOCK
+
+          END_FUNCTION_BLOCK

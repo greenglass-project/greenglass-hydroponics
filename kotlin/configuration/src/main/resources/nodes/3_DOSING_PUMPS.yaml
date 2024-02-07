@@ -1,0 +1,100 @@
+type : "3_DOSING_PUMPS"
+name : "3 dosing pumps"
+description : "3 Dosing pumps controller, 'Green', 'Yellow', 'Blue' "
+image: ""
+
+drivers:
+  - name : "green"
+    type: "gpio_dosing_pump"
+
+    config:
+      type : "gpioDigitalOut"
+      pin: 37
+      activeHigh: false
+      initialState : LOW
+      shutdownState : LOW
+
+  - name : "yellow"
+    type: "gpio_dosing_pump"
+
+    config:
+      type : "gpioDigitalOut"
+      pin: 38
+      activeHigh: false
+      initialState : LOW
+      shutdownState : LOW
+
+  - name : "blue"
+    type: "gpio_dosing_pump"
+
+    config:
+      type : "gpioDigitalOut"
+      pin: 40
+      activeHigh: false
+      initialState: LOW
+      shutdownState: LOW
+
+metrics :
+    - metricName: "/dosers/green/duration"
+      type: "int64"
+      direction: "write"
+      description: "Duration dose (in milliseconds)"
+      driver: "green"
+      function: "doseduration"
+
+    - metricName: "/dosers/green/volume"
+      type: "int64"
+      direction: "write"
+      description: "Volume dose (volume in millilitres)"
+      driver: "green"
+      function: "dosevolume"
+
+    - metricName: "/dosers/green/calibration"
+      type: "double"
+      direction: "write"
+      description: "Dose calibration (millilitres per second)"
+      driver: "green"
+      function: "calibrate"
+
+    - metricName: "/dosers/yellow/duration"
+      type: "int64"
+      direction: "write"
+      description: "Duration dose (in milliseconds)"
+      driver: "yellow"
+      function: "doseduration"
+
+    - metricName: "/dosers/yellow/volume"
+      type: "int64"
+      direction: "write"
+      description: "Volume dose (volume in millilitres)"
+      driver: "yellow"
+      function: "dosevolume"
+
+    - metricName: "/dosers/yellow/calibration"
+      type: "double"
+      direction: "write"
+      description: "Dose calibration (millilitres per second)"
+      driver: "yellow"
+      function: "calibrate"
+
+
+    - metricName: "/dosers/blue/duration"
+      type: "int64"
+      direction: "write"
+      description: "Duration dose (in milliseconds)"
+      driver: "blue"
+      function: "doseduration"
+
+    - metricName: "/dosers/blue/volume"
+      type: "int64"
+      direction: "write"
+      description: "Volume dose (volume in millilitres)"
+      driver: "blue"
+      function: "dosevolume"
+
+    - metricName: "/dosers/blue/calibration"
+      type: "double"
+      direction: "write"
+      description: "Dose calibration (millilitres per second)"
+      driver: "blue"
+      function: "calibrate"

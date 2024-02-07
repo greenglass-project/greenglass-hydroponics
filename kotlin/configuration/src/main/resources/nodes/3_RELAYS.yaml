@@ -1,0 +1,56 @@
+type : "3_RELAYS"
+name : "3 relays controller"
+description : "3 relays controller, 'Green', 'Yellow', 'Blue' "
+image: ""
+
+drivers:
+  - name : "green"
+    type: "gpio_digital_out"
+    config:
+      type: "gpioDigitalOut"
+      pin: 26
+      activeHigh: false
+      initialState : LOW
+      shutdownState : LOW
+
+  - name : "yellow"
+    type: "gpio_digital_out"
+
+    config:
+      type: "gpioDigitalOut"
+      pin: 20
+      activeHigh: false
+      initialState : LOW
+      shutdownState : LOW
+
+  - name : "blue"
+    type: "gpio_digital_out"
+
+    config:
+      type: "gpioDigitalOut"
+      pin: 21
+      activeHigh: false
+      initialState : LOW
+      shutdownState : LOW
+
+metrics:
+  - metricName: "/relays/green/state"
+    type: "boolean"
+    direction: "write"
+    description: "Green relay state"
+    driver: "green"
+    function: "state"
+
+  - metricName: "/relays/yellow/state"
+    type: "boolean"
+    direction: "write"
+    description: "Yellow relay state"
+    driver: "yellow"
+    function: "state"
+
+  - metricName: "/relays/blue/state"
+    type: "boolean"
+    direction: "write"
+    description: "Blue relay state"
+    driver: "blue"
+    function: "state"

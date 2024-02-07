@@ -1,0 +1,50 @@
+name : "Prototype Grow Pipes System"
+implementationId : "PROTOTYPE_GROW_PIPES"
+systemId : "GROW_PIPES"
+nodes :
+  - type : "PH_EC_TEMP_SENSORS"
+    description : "pH, EC and temperature sensors controller"
+    implNodeId: "SENSORS_CONTROLLER"
+    variables:
+      - processId : "STATE_MANAGEMENT"
+        variableId: "ph"
+        metricName: "/sensors/ph/value"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "ec"
+        metricName: "/sensors/ec/value"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "temp"
+        metricName: "/sensors/rtd/value"
+
+  - type: "3_DOSING_PUMPS"
+    description: "3 dosing pumps controller"
+    implNodeId: "SDOSING_PUMPS_CONTROLLER"
+    variables:
+      - processId : "STATE_MANAGEMENT"
+        variableId: "ph-up"
+        metricName: "/dosers/green/volume"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "ph-down"
+        metricName: "/dosers/yellow/volume"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "ec-up"
+        metricName: "/dosers/blue/volume"
+
+  - type : "3_RELAYS"
+    description : "water pumps controller"
+    implNodeId: "WATER_PUMPS_CONTROLLER"
+    variables:
+      - processId: "circulation-pump"
+        variableId: "circulation"
+        metricName: "/relays/green/state"
+      - processId: "STATE_MANAGEMENT"
+        variableId: "water-in"
+        metricName: "/relays/yellow/state"
+      - processId: "STATE_MANAGEMENT"
+        variableId: "water-out"
+        metricName: "/pumps/blue/state"
+
+
+
+
+
