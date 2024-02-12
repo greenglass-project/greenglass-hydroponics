@@ -1,6 +1,11 @@
 site_name: Greenglass Hydroponics
 nav:
   - home : index.md
+  - Control concepts : control-concepts.md
+  - Nodes :
+    - "Node Concept" : node-concept.md
+    - "3 Relays Node" : 3-relays-node.md
+    - "3 EZO Sensors Node" : 3-ezo-sensors-node.md
 
 theme: 
   name : readthedocs

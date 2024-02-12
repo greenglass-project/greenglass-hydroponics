@@ -17,10 +17,10 @@ lip_thickness = 3;
 lip_height = 3;
 
 pi_mount_x = 58;
-pi_mount_y = 49;
+pi_mount_y = 23;
 
 pi_board_x = 65;
-pi_board_y = 56.5;
+pi_board_y = 30;
 
 usb_width = 15;
 usb_height = 9.0;
