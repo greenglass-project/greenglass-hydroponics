@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns="http://www.w3.org/2000/svg" viewBox="191 226 350 406" width="350" height="406">
+  <defs/>
+  <g id="Canvas_1" fill="none" stroke-opacity="1" stroke="none" fill-opacity="1" stroke-dasharray="none">
+    <title>Canvas 1</title>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_17">
+        <rect x="191.79506" y="226.20758" width="348.4099" height="405.58484" fill="white"/>
+      </g>
+      <g id="Group_13">
+        <g id="Graphic_16">
+          <path d="M 288.47322 332.66892 C 283.50107 349.0804 274.07106 349.5746 267.4107 333.77276 C 260.7503 317.971 259.3817 291.85713 264.3539 275.44574 C 269.32604 259.03427 278.75606 258.54007 285.41643 274.3419 C 292.07683 290.14365 293.4454 316.25754 288.47322 332.66892" fill="#4e8f00"/>
+        </g>
+        <g id="Graphic_15">
+          <path d="M 337.48737 298.16388 C 343.3931 282.0648 336.15938 275.99497 321.3304 284.60656 C 306.50143 293.21807 289.6927 313.24992 283.78705 329.34897 C 277.8813 345.44806 285.11504 351.51788 299.94403 342.9063 C 314.773 334.29478 331.5817 314.26293 337.48737 298.16388" fill="#4e8f00"/>
+        </g>
+        <g id="Graphic_14">
+          <path d="M 277.41485 328.57385 C 286.28393 343.2503 280.3413 350.58884 264.14158 344.96497 C 247.9419 339.3412 227.61976 322.88463 218.75076 308.2082 C 209.88168 293.53178 215.82433 286.19322 232.02404 291.8171 C 248.2237 297.44088 268.54585 313.89743 277.41485 328.57385" fill="#4e8f00"/>
+        </g>
+      </g>
+      <g id="Graphic_12">
+        <rect x="363.70494" y="268.20758" width="162.39267" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_11">
+        <rect x="363.70494" y="297.20758" width="162.39267" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_10">
+        <rect x="363.4391" y="325.94176" width="162.39267" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_9">
+        <rect x="363.1733" y="354.67593" width="162.39267" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_8">
+        <rect x="216.75321" y="383.4101" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_7">
+        <rect x="217.55068" y="418.7076" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_6">
+        <rect x="218.08233" y="453.7392" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_5">
+        <rect x="218.61397" y="488.7709" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_4">
+        <rect x="219.14562" y="523.8025" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_3">
+        <rect x="219.67726" y="558.83416" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+      <g id="Graphic_2">
+        <rect x="220.2089" y="593.8658" width="308.54693" height="7.75" fill="#ccc"/>
+      </g>
+    </g>
+  </g>
+</svg>

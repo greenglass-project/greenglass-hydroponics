@@ -1,0 +1,109 @@
+type : "WATER_MANAGEMENT"
+name : "Water management"
+description : "Management of circulation pump and water level pumps/valves and sensors"
+image: "WATER_MANAGEMENT.png"
+
+drivers:
+  - name: "system-info"
+    type: "sysinfo"
+    config: []
+
+  - name : "green"
+    type: "gpio_digital_out"
+    config:
+      - name: "pump"
+        type: "gpioDigitalOut"
+        pin: 20
+        activeHigh: false
+        initialState : "HIGH"
+        shutdownState : "HIGH"
+
+  - name : "yellow"
+    type: "gpio_digital_out"
+
+    config:
+      - name: "pump"
+        type: "gpioDigitalOut"
+        pin: 26
+        activeHigh: false
+        initialState : "HIGH"
+        shutdownState : "HIGH"
+
+  - name : "blue"
+    type: "gpio_digital_out"
+
+    config:
+      - name: "pump"
+        type: "gpioDigitalOut"
+        pin: 21
+        activeHigh: false
+        initialState : "HIGH"
+        shutdownState : "HIGH"
+
+  - name : "waterlevel"
+    type: "gpio_digital_in"
+
+    config:
+      - name: "pump"
+        type: "gpioDigitalIn"
+        pin: 15
+        activeHigh: false
+        pull : "PULL_UP"
+        debounce : 1000
+
+metrics:
+  - metricName: "/Properties/Hardware Make"
+    type: "String"
+    direction: "read"
+    description: "Hardware make"
+    driver: "system-info"
+    function: "HardwareMake"
+
+  - metricName: "/Properties/Hardware Model"
+    type: "String"
+    direction: "read"
+    description: "Hardware model"
+    driver: "system-info"
+    function: "HardwareModel"
+
+  - metricName: "/Properties/OS"
+    type: "String"
+    direction: "read"
+    description: "Operating system"
+    driver: "system-info"
+    function: "Os"
+
+  - metricName: "/Properties/OS Version"
+    type: "String"
+    direction: "read"
+    description: "Operating system version"
+    driver: "system-info"
+    function: "OsVersion"
+
+  - metricName: "/Control/Water In/State"
+    type: "boolean"
+    direction: "write"
+    description: "Water-in pump (or relay) state"
+    driver: "green"
+    function: "State"
+
+  - metricName: "/Control/Water Out/State"
+    type: "boolean"
+    direction: "write"
+    description: "Water-out pump (or relay) state"
+    driver: "yellow"
+    function: "State"
+
+  - metricName: "/Control/Circulation/State"
+    type: "boolean"
+    direction: "write"
+    description: "Circulation pump state"
+    driver: "blue"
+    function: "State"
+
+  - metricName: "/Sensors/High Water/State"
+    type: "boolean"
+    direction: "read"
+    description: "High water level sensor"
+    driver: "waterlevel"
+    function: "State"

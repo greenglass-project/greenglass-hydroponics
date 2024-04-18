@@ -1,0 +1,38 @@
+#version: '3.6'
+services:
+
+  nats:
+    hostname: nats
+    container_name: nats
+    image: nats:latest
+    volumes:
+       - ./nats/:/etc/nats
+    command: -c /etc/nats/nats.conf
+
+    ports:
+      - '4222:4222'
+      - '6222:6222'
+      - '8222:8222'
+
+  influxdb:
+    image: influxdb:latest
+    hostname: influxdb
+    container_name: influxdb
+    ports:
+      - '8086:8086'
+    environment:
+      - INFLUXD_STORE=disk
+    volumes:
+      - ./influxdb/:/imports
+      - ./influxdb/data:/var/lib/influxdb2:rw
+      - ./influxdb/config:/etc/influxdb2 
+    restart : unless-stopped
+
+  hivemq:
+    image : hivemq/hivemq-ce
+    hostname: hivemq
+    container_name: hivemq
+    restart: unless-stopped
+    ports:
+      - "1883:1883"    
+

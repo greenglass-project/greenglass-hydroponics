@@ -1,0 +1,302 @@
+type : "WATER_CONTROL"
+name : "Water control"
+description : "Sensors for EC, pH, temperature and water level, dosing pumps for EC and ph up/down"
+image: "WATER_CONTROL.png"
+
+drivers:
+  - name : "system-info"
+    type : "sysinfo"
+    config: []
+
+  - name : "ept-sensors"
+    type: "ezo_ept"
+    config:
+      - type : "i2c"
+        name : "ec-sensor"
+        device: 1
+        address: 100
+      - type : "i2c"
+        name : "ph-sensor"
+        device: 1
+        address: 99
+      - type : "i2c"
+        name : "rtd-sensor"  
+        device: 1
+        address: 102
+
+  - name : "ec-up"
+    type: "gpio_dosing_pump"
+    config:
+      - name : "pump"
+        type : "gpioDigitalOut"
+        pin: 26
+        activeHigh: false
+        initialState : HIGH
+        shutdownState : HIGH
+
+  - name : "ph-up"
+    type: "gpio_dosing_pump"
+    config:
+      - name : "pump"
+        type : "gpioDigitalOut"
+        pin: 20
+        activeHigh: false
+        initialState : HIGH
+        shutdownState : HIGH
+
+  - name : "ph-down"
+    type: "gpio_dosing_pump"
+    config:
+      - name: "pump"
+        type : "gpioDigitalOut"
+        pin: 21
+        activeHigh: false
+        initialState: HIGH
+        shutdownState: HIGH
+
+metrics:
+  # ----------------------------------------
+  # Properties
+  # ----------------------------------------
+  - metricName: "/Properties/Hardware Make"
+    type: "String"
+    direction: "read"
+    description: "Hardware make"
+    driver: "system-info"
+    function: "HardwareMake"
+
+  - metricName: "/Properties/Hardware Model"
+    type: "String"
+    direction: "read"
+    description: "Hardware model"
+    driver: "system-info"
+    function: "HardwareModel"
+
+  - metricName: "/Properties/OS"
+    type: "String"
+    direction: "read"
+    description: "Operating system"
+    driver: "system-info"
+    function: "Os"
+
+  - metricName: "/Properties/OS Version"
+    type: "String"
+    direction: "read"
+    description: "Operating system version"
+    driver: "system-info"
+    function: "OsVersion"
+
+  # ----------------------------------------
+  # EPT
+  # ----------------------------------------
+  # EC Sensor
+  - metricName: "/Sensors/EC/Value"
+    type: "double"
+    direction : "read"
+    description: "Current ec value"
+    driver: "ept-sensors"
+    function: "EcValue"
+
+  # PH Sensor
+  - metricName:  "/Sensors/PH/Value"
+    type: "double"
+    direction: "read"
+    description: "Current ph value"
+    driver: "ept-sensors"
+    function: "PhValue"
+
+  # RTD Sensor
+  - metricName: "/Sensors/RTD/Value"
+    type: "double"
+    direction: "read"
+    description: "Current temperature"
+    driver: "ept-sensors"
+    function: "RtdValue"
+
+  - metricName: "/Sensors/RTD/Calibration/Temp"
+    type: "double"
+    direction: "write"
+    description: "Calibration temperature"
+    driver: "ept-sensors"
+    function: "CalibrateRtd"
+
+  - metricName: "/Sensors/RTD/Calibration/Clear"
+    type: "boolean"
+    direction: "write"
+    description: "Clear calibration"
+    driver: "ept-sensors"
+    function: "CalibrateRtdClear"
+
+  - metricName: "/Sensors/RTD/Reset"
+    type: "boolean"
+    direction: "write"
+    description: "Device reset"
+    driver: "ept-sensors"
+    function: "RtdDeviceReset"
+
+  # ----------------------------------------
+  # EC-Up Doser
+  # ----------------------------------------
+  - metricName: "/Dosers/EC Up/Duration"
+    type: "int64"
+    direction: "write"
+    description: "Duration dose (in milliseconds)"
+    driver: "ec-up"
+    function: "DoseDuration"
+
+  - metricName: "/Dosers/EC Up/Volume"
+    type: "int64"
+    direction: "write"
+    description: "Volume dose (volume in millilitres)"
+    driver: "ec-up"
+    function: "DoseVolume"
+
+  - metricName: "/Dosers/EC Up/Calibration"
+    type: "double"
+    direction: "write"
+    description: "Dose calibration (millilitres per second)"
+    driver: "ec-up"
+    function: "Calibrate"
+
+  # ----------------------------------------
+  # PH-Up Doser
+  # ----------------------------------------
+  - metricName: "/Dosers/PH Up/Duration"
+    type: "int64"
+    direction: "write"
+    description: "Duration dose (in milliseconds)"
+    driver: "ph-up"
+    function: "DoseDuration"
+
+  - metricName: "/Dosers/PH Up/Volume"
+    type: "int64"
+    direction: "write"
+    description: "Volume dose (volume in millilitres)"
+    driver: "ph-up"
+    function: "DoseVolume"
+
+  - metricName: "/Dosers/PH Up/Calibration"
+    type: "double"
+    direction: "write"
+    description: "Dose calibration (millilitres per second)"
+    driver: "ph-up"
+    function: "Calibrate"
+
+  # ----------------------------------------
+  # PH-Down Doser
+  # ----------------------------------------
+  - metricName: "/Dosers/PH Down/Duration"
+    type: "int64"
+    direction: "write"
+    description: "Duration dose (in milliseconds)"
+    driver: "ph-down"
+    function: "DoseDuration"
+
+  - metricName: "/Dosers/PH Down/Volume"
+    type: "int64"
+    direction: "write"
+    description: "Volume dose (volume in millilitres)"
+    driver: "ph-down"
+    function: "DoseVolume"
+
+  - metricName: "/Dosers/PH Down/Calibration"
+    type: "double"
+    direction: "write"
+    description: "Dose calibration (millilitres per second)"
+    driver: "ph-down"
+    function: "Calibrate"
+
+webservices:
+  # ----------------------------------------
+  # Settingd
+  # ----------------------------------------
+  - endpoint: "/Sensors/Settings/TickInterval"
+    type: "Int32"
+    direction: "read"
+    description: "Tick interval"
+    driver: "ept-sensors"
+    function: "TickInterval"
+
+  - endpoint: "/Sensors/Settings/WindowSize"
+    type: "Int32"
+    direction: "read"
+    description: "Window size"
+    driver: "ept-sensors"
+    function: "WindowSize"
+
+  # ----------------------------------------
+  # EC Sensor
+  # ----------------------------------------
+  - metricName: "/Sensors/EC/Calibration/Dry"
+    type: "double"
+    direction: "write"
+    description: "Calibration dry value"
+    driver: "ept-sensors"
+    function: "CalibrateEcDry"
+
+  - metricName: "/Sensors/EC/Calibration/Low"
+    type: "double"
+    direction: "write"
+    description: "Calibration low ec value"
+    driver: "ept-sensors"
+    function: "CalibrateEcLow"
+
+  - metricName: "/Sensors/EC/Calibration/High"
+    type: "double"
+    direction: "write"
+    description: "Calibration high ec value"
+    driver: "ept-sensors"
+    function: "CalibrateEcHigh"
+
+  - metricName: "/Sensors/EC/Calibration/Clear"
+    type: "boolean"
+    direction: "write"
+    description: "Clear calibration"
+    driver: "ept-sensors"
+    function: "CalibrateEcClear"
+
+  - metricName: "/Sensors/EC/Reset"
+    type: "boolean"
+    direction: "write"
+    description: "Device reset"
+    driver: "ept-sensors"
+    function: "EcDeviceReset"
+
+  # ----------------------------------------
+  # PH Sensor
+  # ----------------------------------------
+  - metricName: "/Sensors/PH/Calibration/Low"
+    type: "double"
+    direction: "write"
+    description: "Calibration low pH value"
+    driver: "ept-sensors"
+    function: "CalibratePhLow"
+
+  - metricName: "/Sensors/PH/Calibration/Mid"
+    type: "double"
+    direction: "write"
+    description: "Calibration mid pH value"
+    driver: "ept-sensors"
+    function: "CalibratePhMid"
+
+  - metricName: "/Sensors/PH/Calibration/High"
+    type: "double"
+    direction: "write"
+    description: "Calibration high pH value"
+    driver: "ept-sensors"
+    function: "CalibratePhHigh"
+
+  - metricName: "/Sensors/PH/Calibration/Clear"
+    type: "boolean"
+    direction: "write"
+    description: "Clear calibration"
+    driver: "ept-sensors"
+    function: "CalibratePhClear"
+
+  - metricName: "/Sensors/PH/Reset"
+    type: "boolean"
+    direction: "write"
+    description: "Device reset"
+    driver: "ept-sensors"
+    function: "PhDeviceReset"
+

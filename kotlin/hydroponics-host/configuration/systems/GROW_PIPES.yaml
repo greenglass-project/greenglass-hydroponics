@@ -1,0 +1,103 @@
+systemId : "GROW_PIPES"
+name : "Grow Pipes"
+description : "Automated vertical grow pipes nft system"
+
+sequences :
+  - sequenceId : "WATER_LEVEL"
+    name : "Maintain the water level"
+    description : "Manage the water level"
+    sequenceVariables:
+     - variableId : "LEVEL"
+       name : "Water level sensor"
+       description: "Hall effect sensor false if water below high level"
+       type : "Boolean"
+    manipulatedVariables:
+     - variableId: "WATER_IN"
+       name: "Water in"
+       description: "Water in pump or valve"
+       type: "Boolean"
+
+  - sequenceId : "EMPTY_WATER"
+    name : "Empty water"
+    description : "Empty some or all of thw water from the tank"
+    manipulatedVariables:
+     - variableId: "WATER_OUT"
+       name: "Water out"
+       description: "Water out pump or valve"
+       type: "Boolean"
+
+processSchedulers :
+  - schedulerId: "GROW_LIGHTS_SCHEDULER"
+    name: "Grow lights scheduler"
+    description: "Turn the grow-lights on and off"
+    processes :
+      - process : "stateControlledProcess"
+        processId : "LIGHTING"
+        name : "Lighting"
+        description : "Turn on the grow-lights on and off"
+
+
+        manipulatedVariables :
+          - variableId: "LIGHTS"
+            name : "lights"
+            description : "Turn on the grow-lights on and off"
+            type : "Boolean"
+
+  - schedulerId: "WATER_SCHEDULER"
+    name: "Water management scheduler"
+    description: "Management of pH and nutrients levels, water circulation and level"
+    processes :
+      - process : "stateControlledProcess"
+        processId : "CIRCULATION_PUMP"
+        name : "Circulation Pump"
+        description : "Turn on the circulation pump on and off"
+
+        manipulatedVariables :
+          - variableId: "CIRCULATION"
+            name : "circulation"
+            description : "Turn the circulation pump on and off"
+            type : "Boolean"
+
+      - process : "fuzzyLogicProcess"
+        processId : "STATE_MANAGEMENT"
+        name : "State management"
+        description : "Management of nutrients, pH and water level"
+
+        processVariables :
+          - variableId : "PH"
+            name : "ph"
+            description : "Control of the pH of the water"
+            type : "Double"
+            default : 5.0
+            minValue : 2.0
+            maxValue : 7.0
+            tolerance: 0.5
+            decimalPlaces: 1
+            units : ""
+
+          - variableId: "EC"
+            name : "ec"
+            description : "Control of the amount of nutrient in the water"
+            type : "Double"
+            default : 1500.0
+            minValue: 600.0
+            maxValue: 2500.0
+            tolerance : 200.0
+            decimalPlaces: 0
+            units: ""
+
+        manipulatedVariables :
+          - variableId: "PH_UP"
+            name : "ph-up"
+            description : "Dosing pump to add alkali to increase the pH "
+            type : "Int64"
+          - variableId: "PH_DOWN"
+            name : "ph-down"
+            description : "Dosing pump to add acid to decrease the pH"
+            type : "Int64"
+          - variableId: "EC_UP"
+            name : "ec-up"
+            description : "Dosing pump to add nutrient"
+            type : "Int64"
+
+        script : ""

@@ -1,0 +1,93 @@
+type : "3_RELAYS"
+name : "3 relays"
+description : "3 relays controller, 'Green', 'Yellow', 'Blue' "
+image: "3_RELAYS.png"
+
+drivers:
+
+  - name: "system-info"
+    type: "sysinfo"
+    config:
+      type: "internal"
+
+  - name : "green"
+    type: "gpio_digital_out"
+    config:
+      - name : 'relay'
+        type: "gpioDigitalOut"
+        pin: 26
+        activeHigh: false
+        initialState : HIGH
+        shutdownState : HIGH
+
+  - name : "yellow"
+    type: "gpio_digital_out"
+
+    config:
+      - name: 'relay'
+        type: "gpioDigitalOut"
+        pin: 20
+        activeHigh: false
+        initialState : HIGH
+        shutdownState : HIGH
+
+  - name : "blue"
+    type: "gpio_digital_out"
+
+    config:
+      - name: 'relay'
+        type: "gpioDigitalOut"
+        pin: 21
+        activeHigh: false
+        initialState : HIGH
+        shutdownState : HIGH
+
+metrics:
+  - metricName: "/Properties/Hardware Make"
+    type: "String"
+    direction: "read"
+    description: "Hardware make"
+    driver: "sysinfo"
+    function: "hardwaremake"
+
+  - metricName: "/Properties/Hardware Model"
+    type: "String"
+    direction: "read"
+    description: "Hardware model"
+    driver: "sysinfo"
+    function: "hardwaremake"
+
+  - metricName: "/Properties/OS"
+    type: "String"
+    direction: "read"
+    description: "Operating system"
+    driver: "sysinfo"
+    function: "os"
+
+  - metricName: "/Properties/OS Version"
+    type: "String"
+    direction: "read"
+    description: "Operating system version"
+    driver: "sysinfo"
+    function: "osversion"
+
+  - metricName: "/Relays/Green/State"
+    type: "boolean"
+    direction: "write"
+    description: "Green relay state"
+    driver: "green"
+    function: "state"
+
+  - metricName: "/Relays/Yellow/State"
+    type: "boolean"
+    direction: "write"
+    description: "Yellow relay state"
+    driver: "yellow"
+    function: "state"
+
+  - metricName: "/Relays/Blue/State"
+    type: "boolean"
+    direction: "write"
+    description: "Blue relay state"
+    driver: "blue"
+    function: "state"

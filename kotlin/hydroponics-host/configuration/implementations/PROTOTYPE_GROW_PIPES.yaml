@@ -1,0 +1,41 @@
+name : "Prototype Grow Pipes System"
+implementationId : "PROTOTYPE_GROW_PIPES"
+systemId : "GROW_PIPES"
+nodes :
+  - type : "WATER_CONTROL"
+    description : "pH and EC levels"
+    implNodeId: "WATER_CONTROL_NODE"
+    variables:
+      - processId : "STATE_MANAGEMENT"
+        variableId: "PH"
+        metricName: "/Sensors/PH/Value"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "EC"
+        metricName: "/Sensors/EC/Value"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "PH_UP"
+        metricName: "/Dosers/PH Up/Volume"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "PH_DOWN"
+        metricName: "/Dosers/PH Down/Volume"
+      - processId : "STATE_MANAGEMENT"
+        variableId: "EC_UP"
+        metricName: "/Dosers/EC Up/Volume"
+
+  - type : "WATER_MANAGEMENT"
+    description : "Water level and circulation"
+    implNodeId: "WATER_PUMPS_NODE"
+    variables:
+      - processId: "CIRCULATION_PUMP"
+        variableId: "CIRCULATION"
+        metricName: "/Control/Circulation/State"
+
+  - type : "3_RELAYS"
+    description : "Lights"
+    implNodeId: "LIGHTS_CONTROLLER"
+    variables:
+      - processId: "LIGHTING"
+        variableId: "LIGHTS"
+        metricName: "/Relays/Green/State"
+
+
