@@ -1,10 +1,6 @@
-rootProject.name = "hydroponics"
+rootProject.name = "hydroponics-host"
 include("hydroponics-host")
-include("hydroponics-test")
-include("hydroponics-node")
 include("generator")
-
-
 
 pluginManagement {
     repositories {
@@ -12,5 +8,18 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    versionCatalogs {
+        create("libs") {
+            from("io.greenglass:version-catalog:0.0.2")
+        }
+    }
+}
+
 
 

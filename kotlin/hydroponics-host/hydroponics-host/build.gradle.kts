@@ -33,53 +33,19 @@ publishing {
 repositories {
     mavenLocal()
     mavenCentral()
-   // maven {
-   //     url = uri("https://oss.sonatype.org/content/repositories/snapshots")
-   //}
 }
 
 tasks.jar {
     manifest.attributes("Main-Class" to "io.greenglass.hydroponics.application.HydroponicsKt")
 }
 
-/*oci {
-    registries {
-        registry("xyx")
-        dockerHub {
-            credentials()
-        }
-    }
-    imageDefinitions.register("main") {
-        allPlatforms {
-            parentImages {
-                add("library:eclipse-temurin:17.0.7_7-jre-jammy")
-            }
-            config {
-                entryPoint.set(listOf("java", "-jar", "app.jar"))
-            }
-            layers {
-                layer("jar") {
-                    contents {
-                        from(tasks.jar)
-                        rename(".*", "app.jar")
-                    }
-                }
-            }
-        }
-    }
-    imageDependencies.forTest(tasks.test) {
-        add(project)
-    }
-}*/
-
-
 jib {
     to {
         image = "ghcr.io/greenglass-project/hydroponics:latest"
 
         auth {
-            username = "steve.hopkins@kathris.com"
-            password = "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".trim()
+            username = System.getenv("GREENGLASS_GITHUB_USERNAME") ?: error("Github username not found")
+            password = System.getenv("GREENGLASS_GITHUB_TOKEN") ?: error("Github token not found")
         }
     }
     from {
@@ -110,12 +76,12 @@ dependencies {
     implementation(project(":generator"))
     ksp(project(":generator"))
 
-    implementation(libs.greenglass.host.application)
-    implementation(libs.greenglass.host.control)
-    implementation(libs.greenglass.host.sparkplug)
-    implementation(libs.greenglass.sparkplug)
+    implementation("io.greenglass.host:host-application:0.0.2")
+    implementation("io.greenglass.host:host-control:0.0.2")
+    implementation("io.greenglass.host:host-sparkplug:0.0.2")
+    implementation("io.greenglass.host:sparkplug:0.0.2")
 
-    implementation(libs.logback)
+    //implementation(libs.logback)
     implementation(libs.tahu)
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.reflect)

@@ -35,20 +35,19 @@ publishing {
 
 dependencies {
 
+    implementation("io.greenglass.host:host-application:0.0.2")
+    implementation("io.greenglass.host:host-control:0.0.2")
+    implementation("io.greenglass.host:host-sparkplug:0.0.2")
+
     implementation(libs.kotlin.stdlib)
     implementation(libs.kotlin.coroutines)
     implementation(libs.kotlin.logging)
-    implementation(libs.logback)
+    //implementation(libs.logback)
     implementation(libs.kotlin.reflect)
 
     implementation(libs.ksp)
     implementation(libs.kotlin.poet.ksp)
     implementation(libs.kotlin.poet)
-
-    implementation(libs.greenglass.host.application)
-    implementation(libs.greenglass.host.control)
-    implementation(libs.greenglass.host.sparkplug)
-    implementation(libs.greenglass.host.control)
     implementation(libs.neo4j)
 
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
